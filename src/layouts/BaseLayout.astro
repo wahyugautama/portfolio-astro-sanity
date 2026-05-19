@@ -1,0 +1,159 @@
+---
+type Props = {
+  title?: string;
+  description?: string;
+  theme?: "light" | "dark";
+};
+
+const {
+  title = "Sandikala Studio",
+  description = "Design-led websites and custom Webflow development for brands that refuse to feel generic.",
+  theme = "light",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <a href="/" class="brand">Sandikala Studio</a>
+
+      <nav aria-label="Main navigation">
+        <a href="/work">Work</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} Sandikala Studio</p>
+
+      <div>
+        <a href="mailto:hello@sandikalastudio.com">Email</a>
+        <a
+          href="https://cal.com/sandikalastudio"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Book a call
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #f7f4ef;
+    --text: #171717;
+    --muted: rgba(23, 23, 23, 0.62);
+    --line: rgba(23, 23, 23, 0.16);
+  }
+
+  html[data-theme="dark"] {
+    --bg: #171717;
+    --text: #f7f4ef;
+    --muted: rgba(247, 244, 239, 0.68);
+    --line: rgba(247, 244, 239, 0.18);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    opacity: 0.6;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 48px;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+
+  .site-header nav {
+    display: flex;
+    gap: 20px;
+    font-size: 15px;
+  }
+
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 32px 48px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer div {
+    display: flex;
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .site-header,
+    .site-footer {
+      padding: 20px 24px;
+    }
+
+    .site-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .site-footer {
+      flex-direction: column;
+    }
+  }
+</style>

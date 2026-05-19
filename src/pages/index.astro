@@ -1,11 +1,243 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="Sandikala Studio | Design-led websites and Webflow development"
+  description="Sandikala Studio crafts visually distinctive websites and custom Webflow builds for brands that refuse to feel generic."
+>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Design · Webflow · Interaction</p>
+
+      <h1>Websites for brands that refuse to feel generic.</h1>
+
+      <div class="hero-bottom">
+        <p>
+          Sandikala Studio is a small creative studio crafting visually
+          distinctive websites with strong direction, clean structure, and
+          purposeful motion.
+        </p>
+
+        <a href="/work" class="button">View selected work</a>
+      </div>
+    </section>
+
+    <section class="intro">
+      <p>
+        We turn brand ideas into expressive digital experiences — from sharp
+        marketing sites to custom Webflow builds with CMS, motion, and
+        interaction details that feel considered.
+      </p>
+    </section>
+
+    <section class="featured">
+      <div class="section-head">
+        <p>Selected focus</p>
+        <a href="/work">See work</a>
+      </div>
+
+      <div class="cards">
+        <a href="/work" class="card">
+          <span>01</span>
+          <h2>Website Design</h2>
+          <p>
+            Visual direction, page structure, responsive design, and art
+            direction for websites that feel specific to the brand.
+          </p>
+        </a>
+
+        <a href="/work" class="card">
+          <span>02</span>
+          <h2>Webflow Development</h2>
+          <p>
+            Custom builds with clean CMS setup, scalable structure, responsive
+            behavior, and launch-ready implementation.
+          </p>
+        </a>
+
+        <a href="/work" class="card">
+          <span>03</span>
+          <h2>Motion & Interaction</h2>
+          <p>
+            GSAP-powered animations, page transitions, scroll moments, and
+            subtle micro-interactions where they support the experience.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <section class="cta">
+      <p>Available for selected website projects.</p>
+      <h2>
+        Have something that needs to look sharper, clearer, and less
+        template-made?
+      </h2>
+      <a href="/contact" class="button">Start a project</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    padding: 0 48px 96px;
+  }
+
+  .hero {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 0 48px;
+  }
+
+  .eyebrow,
+  .section-head p,
+  .cta > p {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  h1 {
+    max-width: 1180px;
+    margin: 40px 0;
+    font-size: clamp(64px, 13vw, 180px);
+    line-height: 0.84;
+    letter-spacing: -0.085em;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 48px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  .hero-bottom p {
+    max-width: 680px;
+    margin: 0;
+    font-size: clamp(20px, 2.2vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .button {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .intro {
+    border-top: 1px solid var(--line);
+    padding: 48px 0 120px;
+  }
+
+  .intro p {
+    max-width: 1180px;
+    margin: 0;
+    font-size: clamp(36px, 6vw, 92px);
+    line-height: 0.96;
+    letter-spacing: -0.065em;
+  }
+
+  .featured {
+    padding: 48px 0 120px;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--line);
+    padding: 24px;
+  }
+
+  .card span {
+    color: var(--muted);
+  }
+
+  .card h2 {
+    margin: auto 0 16px;
+    font-size: clamp(28px, 3vw, 48px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .cta {
+    border-top: 1px solid var(--line);
+    padding-top: 48px;
+  }
+
+  .cta h2 {
+    max-width: 980px;
+    margin: 24px 0 32px;
+    font-size: clamp(42px, 7vw, 110px);
+    line-height: 0.92;
+    letter-spacing: -0.065em;
+  }
+
+  @media (max-width: 768px) {
+    main {
+      padding: 0 24px 72px;
+    }
+
+    .hero {
+      min-height: auto;
+      padding: 72px 0 80px;
+    }
+
+    h1 {
+      margin: 32px 0 72px;
+    }
+
+    .hero-bottom {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .intro,
+    .featured {
+      padding-bottom: 80px;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      min-height: 260px;
+    }
+  }
+</style>
