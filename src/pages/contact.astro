@@ -17,15 +17,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       description="Start a website design or Webflow development project with Sandikala Studio."
     >
       <main>
-        <nav>
-          <a href="/">Sandikala Studio</a>
-          <div>
-            <a href="/work">Work</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-          </div>
-        </nav>
-
         <section class="hero">
           <p>Contact</p>
           <h1>Tell us what you’re building.</h1>
@@ -40,6 +31,82 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               to improve.
             </p>
           </div>
+
+          <form
+            class="contact-form"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            action="/thank-you"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+
+            <div class="field-row">
+              <label for="name">Name</label>
+              <input
+                id="name"
+                name="Name"
+                type="text"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="field-row">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                name="Email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="field-row">
+              <label for="company">Company</label>
+              <input
+                id="company"
+                name="Company"
+                type="text"
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="field-row">
+              <label for="budget">Budget</label>
+              <select id="budget" name="Budget">
+                <option value="">Select range</option>
+                <option value="USD 5,000 - 10,000">USD 5,000 - 10,000</option>
+                <option value="USD 10,000 - 20,000">USD 10,000 - 20,000</option>
+                <option value="USD 20,000+">USD 20,000+</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+
+            <div class="field-row">
+              <label for="timeline">Timeline</label>
+              <select id="timeline" name="Timeline">
+                <option value="">Select timeline</option>
+                <option value="ASAP">ASAP</option>
+                <option value="1 - 2 months">1 - 2 months</option>
+                <option value="3 - 6 months">3 - 6 months</option>
+                <option value="Flexible">Flexible</option>
+              </select>
+            </div>
+
+            <div class="field-row field-row-full">
+              <label for="message">Project details</label>
+              <textarea
+                id="message"
+                name="Project details"
+                rows="6"
+                placeholder="Tell us about the site, goals, pages, CMS needs, and references."
+                required></textarea>
+            </div>
+
+            <button type="submit">Send enquiry</button>
+          </form>
 
           <div class="contact-card">
             <p>Email</p>
@@ -144,6 +211,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     padding-top: 24px;
   }
 
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    border-top: 1px solid rgba(247, 244, 239, 0.24);
+    padding-top: 24px;
+  }
+
   h2 {
     font-size: clamp(32px, 4vw, 56px);
     line-height: 1;
@@ -164,6 +239,86 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     line-height: 1;
     letter-spacing: -0.05em;
     margin-top: 16px;
+  }
+
+  .field-row,
+  .field-row-full {
+    display: grid;
+    gap: 10px;
+  }
+
+  .field-row-full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(247, 244, 239, 0.28);
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    padding: 14px 16px;
+  }
+
+  select {
+    appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, currentColor 50%),
+      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 42px;
+  }
+
+  textarea {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #f7f4ef;
+    outline: none;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(247, 244, 239, 0.42);
+  }
+
+  option {
+    background: #171717;
+    color: #f7f4ef;
+  }
+
+  button {
+    justify-self: start;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: #f7f4ef;
+    color: #171717;
+    cursor: pointer;
+    font: inherit;
+    padding: 14px 22px;
+  }
+
+  button:hover {
+    opacity: 0.75;
   }
 
   ul {
@@ -206,6 +361,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     }
 
     .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form {
       grid-template-columns: 1fr;
     }
   }
