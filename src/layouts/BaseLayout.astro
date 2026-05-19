@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 type Props = {
   title?: string;
   description?: string;
@@ -19,10 +21,12 @@ const {
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+
+    <ClientRouter />
   </head>
 
   <body>
-    <header class="site-header">
+    <header class="site-header" transition:persist>
       <a href="/" class="brand">Sandikala Studio</a>
 
       <nav aria-label="Main navigation">
@@ -32,9 +36,11 @@ const {
       </nav>
     </header>
 
-    <slot />
+    <div class="page-transition" transition:name="page">
+      <slot />
+    </div>
 
-    <footer class="site-footer">
+    <footer class="site-footer" transition:persist>
       <p>© {new Date().getFullYear()} Sandikala Studio</p>
 
       <div>
@@ -139,6 +145,45 @@ const {
   .site-footer div {
     display: flex;
     gap: 20px;
+  }
+
+  ::view-transition-old(page) {
+    animation: page-out 0.28s ease both;
+  }
+
+  ::view-transition-new(page) {
+    animation: page-in 0.42s ease both;
+  }
+
+  @keyframes page-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(page),
+    ::view-transition-new(page) {
+      animation: none;
+    }
   }
 
   @media (max-width: 768px) {
