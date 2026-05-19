@@ -1,0 +1,182 @@
+---
+import { sanityClient } from "sanity:client";
+import { urlFor } from "../../lib/sanityImage";
+
+type ProjectPath = {
+  slug: string;
+};
+
+type Project = {
+  title: string;
+  client?: string;
+  year?: number;
+  industry?: string;
+  services?: string[];
+  summary?: string;
+  coverImage?: any;
+};
+
+export async function getStaticPaths() {
+  const projects: ProjectPath[] = await sanityClient.fetch(`
+    *[_type == "project" && defined(slug.current)] {
+      "slug": slug.current
+    }
+  `);
+
+  return projects.map((project) => ({
+    params: {
+      slug: project.slug,
+    },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const project: Project | null = await sanityClient.fetch(
+  `
+  *[_type == "project" && slug.current == $slug][0] {
+    title,
+    client,
+    year,
+    industry,
+    services,
+    summary,
+    coverImage
+  }
+`,
+  { slug },
+);
+
+if (!project) {
+  return Astro.redirect("/404");
+}
+---
+
+<html lang="en">
+  <head>
+    <title>{project.title} | Sandikala Studio</title>
+    <meta name="description" content={project.summary || project.title} />
+  </head>
+
+  <body>
+    <main>
+      <a href="/work">← Back to work</a>
+
+      <section class="hero">
+        <p>
+          {project.client}
+          {project.client && project.year ? " · " : ""}
+          {project.year}
+        </p>
+
+        <h1>{project.title}</h1>
+
+        {project.summary && <p class="summary">{project.summary}</p>}
+      </section>
+
+      {
+        project.coverImage && (
+          <img
+            class="cover"
+            src={urlFor(project.coverImage).width(1800).url()}
+            alt={project.title}
+          />
+        )
+      }
+
+      <section class="meta">
+        {
+          project.industry && (
+            <div>
+              <p>Industry</p>
+              <h2>{project.industry}</h2>
+            </div>
+          )
+        }
+
+        {
+          project.services && (
+            <div>
+              <p>Services</p>
+              <ul>
+                {project.services.map((service) => (
+                  <li>{service}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #f7f4ef;
+    color: #171717;
+  }
+
+  main {
+    padding: 48px;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .hero {
+    margin-top: 80px;
+  }
+
+  h1 {
+    max-width: 1100px;
+    font-size: clamp(56px, 10vw, 150px);
+    line-height: 0.88;
+    letter-spacing: -0.07em;
+  }
+
+  .summary {
+    max-width: 680px;
+    font-size: 24px;
+    line-height: 1.35;
+  }
+
+  .cover {
+    width: 100%;
+    margin-top: 80px;
+    display: block;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 64px;
+  }
+
+  .meta p {
+    opacity: 0.6;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    main {
+      padding: 24px;
+    }
+
+    .meta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
