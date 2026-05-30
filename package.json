@@ -9,11 +9,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "seed:blog": "node scripts/seed-blog-posts.mjs"
   },
   "dependencies": {
     "@sanity/astro": "^3.4.0",
+    "@sanity/client": "^6.22.1",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/types": "^1.0.15",
     "astro": "^6.3.5"
   }
 }
